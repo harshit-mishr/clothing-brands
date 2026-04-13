@@ -1,0 +1,85 @@
+{% comment %}
+  Minimal section for Section Rendering API — loaded via
+  /products/{handle}?view=ajax-card&section_id=ajax-product-card
+  Outputs a single <li> matching main-collection-product-grid markup.
+{% endcomment %}
+<li
+  class="grid__item"
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle | escape }}"
+>
+  {% render 'card-product',
+    card_product: product,
+    media_aspect_ratio: section.settings.image_ratio,
+    image_shape: section.settings.image_shape,
+    show_secondary_image: section.settings.show_secondary_image,
+    show_vendor: section.settings.show_vendor,
+    show_rating: section.settings.show_rating,
+    lazy_load: true,
+    show_quick_add: section.settings.enable_quick_add,
+    section_id: section.id
+  %}
+</li>
+
+{% schema %}
+{
+  "name": "AJAX product card",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Used only for infinite-scroll card HTML. Defaults match the main collection grid; adjust here if cards look different."
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        { "value": "adapt", "label": "Adapt" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "adapt",
+      "label": "Image ratio"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "arch", "label": "Arch" },
+        { "value": "blob", "label": "Blob" },
+        { "value": "chevronleft", "label": "Chevron left" },
+        { "value": "chevronright", "label": "Chevron right" },
+        { "value": "diamond", "label": "Diamond" },
+        { "value": "parallelogram", "label": "Parallelogram" },
+        { "value": "round", "label": "Round" }
+      ],
+      "default": "default",
+      "label": "Image shape"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "Show second image on hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "Show product rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "default": false,
+      "label": "Enable quick add"
+    }
+  ]
+}
+{% endschema %}
